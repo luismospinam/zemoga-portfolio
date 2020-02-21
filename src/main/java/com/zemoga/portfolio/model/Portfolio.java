@@ -15,6 +15,18 @@ public class Portfolio {
     private String description;
     private String title;
 
+    public Portfolio(String idPortfolio, String twitterUserName, String imageUrl, String description, String title) {
+        this.idPortfolio = idPortfolio;
+        this.twitterUserName = twitterUserName;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.title = title;
+    }
+
+    public Portfolio() {
+
+    }
+
     public String getIdPortfolio() {
         return idPortfolio;
     }
