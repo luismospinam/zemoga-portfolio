@@ -9,17 +9,17 @@ public class Portfolio {
 
     @Id
     @Column(name = "idportfolio")
-    private int idPortfolio;
+    private String idPortfolio;
     private String twitterUserName;
     private String imageUrl;
     private String description;
     private String title;
 
-    public int getIdPortfolio() {
+    public String getIdPortfolio() {
         return idPortfolio;
     }
 
-    public void setIdPortfolio(int idPortfolio) {
+    public void setIdPortfolio(String idPortfolio) {
         this.idPortfolio = idPortfolio;
     }
 

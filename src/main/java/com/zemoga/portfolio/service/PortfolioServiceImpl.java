@@ -18,16 +18,16 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
-    public Portfolio findPortfolioById(Integer id) {
-        if (id == null || id <= 0) {
-            throw new CustomPortfolioException("The portfolio Id can't be null and must be greater than 0.");
+    public Portfolio findPortfolioById(String id) {
+        if (id == null || !stringIsValidInteger(id) || Integer.valueOf(id) <= 0) {
+            throw new CustomPortfolioException("The portfolio Id can't be null and must be a valid Number greater than 0.");
         }
         return portfolioRepository.findById(id)
                 .orElseThrow(() -> new PortfolioNotFoundException("There was not portfolio found with id: " + id));
     }
 
     @Override
-    public Portfolio updatePortfolio(Portfolio portfolio, Integer id) {
+    public Portfolio updatePortfolio(Portfolio portfolio, String id) {
         if (id == null) {
             throw new CustomPortfolioException("An Id must be provided as a path parameter in the URL.");
         } else if (portfolio == null) {
@@ -37,9 +37,18 @@ public class PortfolioServiceImpl implements PortfolioService {
         portfolio.setIdPortfolio(id);
         findPortfolioById(portfolio.getIdPortfolio());
 
-        portfolioRepository.save(portfolio);
+        portfolio = portfolioRepository.save(portfolio);
 
         return portfolio;
+    }
+
+    private boolean stringIsValidInteger(String number) {
+        try {
+            Integer.valueOf(number);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

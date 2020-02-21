@@ -23,14 +23,14 @@ public class UserPortfolioController {
 
 
     @GetMapping(value = "/user_info/{idPortfolio}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Portfolio> getPortfolioById(@PathVariable("idPortfolio") final Integer idPortfolio) {
+    public ResponseEntity<Portfolio> getPortfolioById(@PathVariable("idPortfolio") final String idPortfolio) {
         var portfolio = portfolioService.findPortfolioById(idPortfolio);
 
         return ResponseEntity.ok(portfolio);
     }
 
     @PostMapping(value = "/modify_user_info/{idPortfolio}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Portfolio> modifyPortfolioById(@RequestBody(required = false) final Portfolio portfolio, @PathVariable("idPortfolio") final Integer idPortfolio) {
+    public ResponseEntity<Portfolio> modifyPortfolioById(@RequestBody(required = false) final Portfolio portfolio, @PathVariable("idPortfolio") final String idPortfolio) {
         var portfolioResponse = portfolioService.updatePortfolio(portfolio, idPortfolio);
 
         return ResponseEntity.ok(portfolioResponse);

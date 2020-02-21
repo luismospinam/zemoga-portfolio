@@ -5,8 +5,8 @@ import com.zemoga.portfolio.model.Portfolio;
 
 public interface PortfolioService {
 
-    Portfolio findPortfolioById(Integer id);
+    Portfolio findPortfolioById(String id);
 
-    Portfolio updatePortfolio(Portfolio portfolio, Integer id);
+    Portfolio updatePortfolio(Portfolio portfolio, String id);
 
 }
