@@ -1,5 +1,6 @@
 package com.zemoga.portfolio.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,18 +8,19 @@ import javax.persistence.Id;
 public class Portfolio {
 
     @Id
-    private int idportfolio;
+    @Column(name = "idportfolio")
+    private int idPortfolio;
     private String twitterUserName;
     private String imageUrl;
     private String description;
     private String title;
 
-    public int getIdportfolio() {
-        return idportfolio;
+    public int getIdPortfolio() {
+        return idPortfolio;
     }
 
-    public void setIdportfolio(int idportfolio) {
-        this.idportfolio = idportfolio;
+    public void setIdPortfolio(int idPortfolio) {
+        this.idPortfolio = idPortfolio;
     }
 
     public String getTwitterUserName() {

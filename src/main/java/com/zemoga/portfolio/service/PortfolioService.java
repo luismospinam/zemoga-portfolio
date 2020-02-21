@@ -7,4 +7,6 @@ public interface PortfolioService {
 
     Portfolio findPortfolioById(Integer id);
 
+    Portfolio updatePortfolio(Portfolio portfolio, Integer id);
+
 }
