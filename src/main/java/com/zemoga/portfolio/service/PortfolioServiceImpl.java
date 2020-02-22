@@ -7,23 +7,40 @@ import com.zemoga.portfolio.repository.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
 
+
+    private TwitterIntegrationService twitterIntegrationService;
     private PortfolioRepository portfolioRepository;
 
     @Autowired
-    public PortfolioServiceImpl(PortfolioRepository portfolioRepository) {
+    public PortfolioServiceImpl(PortfolioRepository portfolioRepository, TwitterIntegrationService twitterIntegrationService) {
         this.portfolioRepository = portfolioRepository;
+        this.twitterIntegrationService = twitterIntegrationService;
     }
 
     @Override
     public Portfolio findPortfolioById(String id) {
+        return findPortfolioById(id, true);
+    }
+
+
+    protected Portfolio findPortfolioById(String id, boolean shouldIntegrateWithTwitter) {
         if (id == null || !stringIsValidInteger(id) || Integer.valueOf(id) <= 0) {
             throw new CustomPortfolioException("The portfolio Id can't be null and must be a valid Number greater than 0.");
         }
-        return portfolioRepository.findById(id)
+
+        var portfolio = portfolioRepository.findById(id)
                 .orElseThrow(() -> new PortfolioNotFoundException("There was not portfolio found with id: " + id));
+
+        if (shouldIntegrateWithTwitter) {
+            portfolio.setTweets(twitterIntegrationService.getLastTweetsFromUser(portfolio.getTwitterUserName()));
+        }
+
+        return portfolio;
     }
 
     @Override
@@ -35,7 +52,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
 
         portfolio.setIdPortfolio(id);
-        findPortfolioById(portfolio.getIdPortfolio());
+        findPortfolioById(portfolio.getIdPortfolio(), false);
 
         portfolio = portfolioRepository.save(portfolio);
 

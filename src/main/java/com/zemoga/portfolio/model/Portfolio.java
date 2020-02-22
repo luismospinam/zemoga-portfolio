@@ -1,8 +1,13 @@
 package com.zemoga.portfolio.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Portfolio {
@@ -14,6 +19,11 @@ public class Portfolio {
     private String imageUrl;
     private String description;
     private String title;
+
+    @JsonInclude
+    @Transient
+    private List<String> tweets = new ArrayList<>();
+
 
     public Portfolio(String idPortfolio, String twitterUserName, String imageUrl, String description, String title) {
         this.idPortfolio = idPortfolio;
@@ -65,5 +75,13 @@ public class Portfolio {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<String> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<String> tweets) {
+        this.tweets = tweets;
     }
 }

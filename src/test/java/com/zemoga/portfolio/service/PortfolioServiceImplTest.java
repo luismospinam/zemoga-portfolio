@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +25,10 @@ class PortfolioServiceImplTest {
     private PortfolioServiceImpl portfolioService;
 
     @Mock
-    private PortfolioRepository portfolioRepository;
+    private PortfolioRepository portfolioRepositoryMock;
+
+    @Mock
+    private TwitterIntegrationServiceImpl twitterIntegrationServiceMock;
 
 
     @Test
@@ -66,7 +70,7 @@ class PortfolioServiceImplTest {
     @Test
     void findPortfolioByIdNotExistingShouldFail() {
         String id = "1";
-        Mockito.when(portfolioRepository.findById(id)).thenReturn(Optional.empty());
+        Mockito.when(portfolioRepositoryMock.findById(id)).thenReturn(Optional.empty());
 
         PortfolioNotFoundException expectedException = Assertions.assertThrows(PortfolioNotFoundException.class,
                 () -> portfolioService.findPortfolioById(id),
@@ -79,7 +83,8 @@ class PortfolioServiceImplTest {
     void findPortfolioByIdSucceed() {
         String id = "1";
         Portfolio expectedPortfolio = TestHelper.createDummyPortfolio(id);
-        Mockito.when(portfolioRepository.findById(id)).thenReturn(Optional.of(expectedPortfolio));
+        Mockito.when(portfolioRepositoryMock.findById(id)).thenReturn(Optional.of(expectedPortfolio));
+        Mockito.when(twitterIntegrationServiceMock.getLastTweetsFromUser("testUser")).thenReturn(List.of("tweet1"));
 
         Portfolio response = portfolioService.findPortfolioById(id);
 
@@ -97,11 +102,12 @@ class PortfolioServiceImplTest {
     void updatePortfolioShouldValidateIdExistCallingFindMethod() {
         String id = "1";
         Portfolio portfolio = TestHelper.createDummyPortfolio(id);
-        Mockito.when(portfolioRepository.findById(id)).thenReturn(Optional.of(portfolio));
+        Mockito.when(portfolioRepositoryMock.findById(id)).thenReturn(Optional.of(portfolio));
 
         portfolioService.updatePortfolio(portfolio, id);
 
-        Mockito.verify(portfolioService, Mockito.times(1)).findPortfolioById(id);
+        Mockito.verify(portfolioService, Mockito.times(1)).findPortfolioById(id, false);
+        Mockito.verify(twitterIntegrationServiceMock, Mockito.times(0)).getLastTweetsFromUser("testUser");
     }
 
     @Test
@@ -115,6 +121,7 @@ class PortfolioServiceImplTest {
 
         Assertions.assertNotNull(expectedException.getMessage(), "Exception message should NOT be null");
         Mockito.verify(portfolioService, Mockito.times(0)).findPortfolioById(id);
+        Mockito.verify(twitterIntegrationServiceMock, Mockito.times(0)).getLastTweetsFromUser("testUser");
     }
 
     @Test
@@ -128,18 +135,20 @@ class PortfolioServiceImplTest {
 
         Assertions.assertNotNull(expectedException.getMessage(), "Exception message should NOT be null");
         Mockito.verify(portfolioService, Mockito.times(0)).findPortfolioById(id);
+        Mockito.verify(twitterIntegrationServiceMock, Mockito.times(0)).getLastTweetsFromUser("testUser");
     }
 
     @Test
     void updatePortfolioWithExistingIdSucceed() {
         String id = "1";
         Portfolio portfolio = TestHelper.createDummyPortfolio(id);
-        Mockito.when(portfolioRepository.findById(id)).thenReturn(Optional.of(portfolio));
-        Mockito.when(portfolioRepository.save(portfolio)).thenReturn(portfolio);
+        Mockito.when(portfolioRepositoryMock.findById(id)).thenReturn(Optional.of(portfolio));
+        Mockito.when(portfolioRepositoryMock.save(portfolio)).thenReturn(portfolio);
 
         portfolioService.updatePortfolio(portfolio, id);
 
-        Mockito.verify(portfolioService, Mockito.times(1)).findPortfolioById(id);
-        Mockito.verify(portfolioRepository, Mockito.times(1)).save(portfolio);
+        Mockito.verify(portfolioService, Mockito.times(1)).findPortfolioById(id, false);
+        Mockito.verify(portfolioRepositoryMock, Mockito.times(1)).save(portfolio);
+        Mockito.verify(twitterIntegrationServiceMock, Mockito.times(0)).getLastTweetsFromUser("testUser");
     }
 }

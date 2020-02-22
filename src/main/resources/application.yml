@@ -7,3 +7,9 @@ spring:
     url: jdbc:mysql://zemoga-test-db.crhpedy9xxto.us-east-1.rds.amazonaws.com:3306/zemoga_test_db
     username: zemoga_test_db
     password: Zem0ga.101
+
+integration:
+  twitter:
+    bearer-token: bearer AAAAAAAAAAAAAAAAAAAAAHCfCgEAAAAAJax4aqAz7fD%2Fcin8wb7N5BXYp%2Fc%3DhaxnVdLMXJ0bhtlS7hALV07bPADVphOlimBg6Wy2T3HVGW7l56
+    api-url: https://api.twitter.com/1.1/
+    quantity: 5
