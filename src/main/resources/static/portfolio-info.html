@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Portfolio Zemoga</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="js/portfolio-functions.js"></script>
+</head>
+<body>
+    <p><img id="image" style="display: block;margin-left: auto;margin-right: auto;" onerror="this.src='error-image.png'"/></p>
+    <table border="1" width="70%" align="center">
+        <tbody>
+        <tr>
+            <td width="30%">Twitter Username</td>
+            <td width="70%" id="username"></td>
+        </tr>
+        <tr>
+            <td width="30%">Description</td>
+            <td width="70%" id="description"></td>
+        </tr>
+        <tr>
+            <td width="30%">Title</td>
+            <td width="70%" id="title"></td>
+        </tr>
+        <tr>
+            <td width="30%">Tweets</td>
+            <td width="70%" id="tweets"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="text-align: center">
+        <button id="updateButton" type="button">Update Portfolio</button>
+    </div>
+    <script type="text/javascript">
+        document.getElementById("updateButton").onclick = function () {
+            location.href = "portfolio-update.html?id=" + getIdFromUrl();
+        };
+    </script>
+
+    <script type="text/javascript">
+        window.onload = function() {
+          loadPortfolioContent(true);
+        };
+    </script>
+
+</body>
+</html>

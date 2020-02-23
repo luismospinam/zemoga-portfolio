@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Portfolio Zemoga</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="js/portfolio-functions.js"></script>
+</head>
+<body>
+
+<div style="width: 50%;margin: 0 auto;">
+    <p>ID: </p>
+    <input type="text" id="idportfolio" name="idportfolio" disabled style="width: 70%">
+
+    <p>Image Link: </p>
+    <input type="text" id="image" name="image" style="width: 70%">
+
+    <p>username: </p>
+    <input type="text" id="username" name="username" style="width: 70%">
+
+    <p>description: </p>
+    <input type="text" id="description" name="description" style="width: 70%">
+
+    <p>title: </p>
+    <input type="text" id="title" name="title" style="width: 70%">
+
+    <br><br>
+    <button id="searchButton" type="button">Update Portfolio</button>
+</div>
+
+<script type="text/javascript">
+        loadPortfolioContent(false);
+        document.getElementById("searchButton").onclick = function () {
+            updatePortfolioData();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Portfolio Zemoga</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <p>Insert the ID of the portfolio:</p>
+    <input type="text" id="idPortfolio" name="idPortfolio">
+    <button id="searchButton" type="button">Search Portfolio</button>
+
+    <script type="text/javascript">
+        document.getElementById("searchButton").onclick = function () {
+            var idPortfolio = document.getElementById("idPortfolio").value;
+            location.href = "portfolio-info.html?id=" + idPortfolio;
+        };
+    </script>
+</body>
+</html>
