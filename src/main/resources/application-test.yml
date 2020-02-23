@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /zemoga_portfolio_api
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:test-db
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2console/
+
+
+integration:
+  twitter:
+    bearer-token: bearer AAAAAAAAAAAAAAAAAAAAAHCfCgEAAAAAJax4aqAz7fD%2Fcin8wb7N5BXYp%2Fc%3DhaxnVdLMXJ0bhtlS7hALV07bPADVphOlimBg6Wy2T3HVGW7l56
+    api-url: https://api.twitter.com/1.1/
+    quantity: 5
