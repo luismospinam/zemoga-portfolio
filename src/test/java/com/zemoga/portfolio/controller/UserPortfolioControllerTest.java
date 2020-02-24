@@ -19,7 +19,6 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,7 +38,7 @@ class UserPortfolioControllerTest {
         Portfolio dummyPortfolio = TestHelper.createDummyPortfolio(id);
         when(portfolioService.findPortfolioById(id)).thenReturn(dummyPortfolio);
 
-        this.mockMvc.perform(get("/user_info/1")).andDo(print())
+        this.mockMvc.perform(get("/user_info/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"idPortfolio\":\"1\"")))
                 .andExpect(content().string(containsString("\"twitterUserName\":\"testUser\"")))
@@ -52,7 +51,7 @@ class UserPortfolioControllerTest {
         String id = "1";
         when(portfolioService.findPortfolioById(id)).thenThrow(new PortfolioNotFoundException("test-error-message"));
 
-        this.mockMvc.perform(get("/user_info/1")).andDo(print())
+        this.mockMvc.perform(get("/user_info/1"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("\"Error\":\"Not Found\"")))
                 .andExpect(content().string(containsString(",\"status\":404")))
@@ -64,7 +63,7 @@ class UserPortfolioControllerTest {
         String id = "invalid-id";
         when(portfolioService.findPortfolioById(id)).thenThrow(new CustomPortfolioException("invalid-error-message"));
 
-        this.mockMvc.perform(get("/user_info/" + id)).andDo(print())
+        this.mockMvc.perform(get("/user_info/" + id))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString("\"Error\":\"Bad Request\"")))
                 .andExpect(content().string(containsString(",\"status\":400")))

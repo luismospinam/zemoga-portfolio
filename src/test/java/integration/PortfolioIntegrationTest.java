@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.CoreMatchers.is;
 
 @Category(IntegrationCategoryMarker.class)
 public class PortfolioIntegrationTest extends BaseIntegrationTest {
@@ -24,7 +24,7 @@ public class PortfolioIntegrationTest extends BaseIntegrationTest {
                 .body("imageUrl", equalTo("image-url"))
                 .body("description", equalTo("description"))
                 .body("title", equalTo("title"))
-                .body("tweets", hasSize(5));
+                .body("tweets.size()", is(5));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class PortfolioIntegrationTest extends BaseIntegrationTest {
                 .body("imageUrl", equalTo("image2"))
                 .body("description", equalTo("description2"))
                 .body("title", equalTo("title2"))
-                .body("tweets", hasSize(0));
+                .body("tweets.size()", is(0));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PortfolioIntegrationTest extends BaseIntegrationTest {
                 .body("imageUrl", equalTo("new_image"))
                 .body("description", equalTo("new_description"))
                 .body("title", equalTo("new_title"))
-                .body("tweets", hasSize(0));
+                .body("tweets.size()", is(0));
     }
 
     @Test
